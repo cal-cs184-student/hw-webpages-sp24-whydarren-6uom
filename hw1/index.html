@@ -8,7 +8,8 @@
         font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
           "Lucida Sans";
         line-height: 1.6;
-        margin: 20px;
+        margin-left: 20%;
+        margin-right: 20%;
       }
 
       h1,
@@ -84,9 +85,9 @@
     </header>
 
     <section id="overview">
-      <h2>Overview</h2>
+      <h2>Homework Description</h2>
       <p>
-        In this assignment you will implement a simple rasterizer, including
+        In this assignment, you will implement a simple rasterizer, including
         features like drawing triangles, supersampling, hierarchical transforms,
         and texture mapping with antialiasing.
       </p>
@@ -94,6 +95,9 @@
 
     <section id="task1">
       <h2>Task 1: Drawing Single-Color Triangles (20 pts)</h2>
+      <div style="display: flex; justify-content: center; align-items: center">
+        <img src="Task1.png" alt="Task 1 Scrsht svg 4" style="width: 50%" />
+      </div>
       <h3>Solution Walk Though</h3>
       <p>
         In this task, we implemented a naive algorithm for pixel sampling within
@@ -106,10 +110,76 @@
         inside the triangle and should be colored.
       </p>
       <h3>Optimization</h3>
-      <p>One way that we did to optimize the</p>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 40%;
+          margin: 0px;
+        "
+      >
+        <div
+          style="
+            border: 2px solid black;
+            display: inline-block;
+            margin-top: 10px;
+            position: relative;
+            width: 200px;
+            height: 200px;
+            transform: scale(1.5);
+          "
+        >
+          <div
+            style="
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 0;
+              border-left: 100px solid transparent;
+              border-right: 100px solid transparent;
+              border-bottom: 200px solid black; /* Adjusted to match the height of the bounding rectangle */
+            "
+          ></div>
+          <div
+            style="
+              position: absolute;
+              bottom: 50%;
+              left: 15px;
+              width: 5px;
+              height: 5px;
+              background-color: red;
+              border-radius: 50%;
+            "
+          ></div>
+          <div
+            style="
+              position: absolute;
+              bottom: 50%;
+              right: 15px;
+              width: 5px;
+              height: 5px;
+              background-color: red;
+              border-radius: 50%;
+            "
+          ></div>
+          <div style="position: absolute; bottom: 55%; left: 15px">A</div>
+          <div style="position: absolute; bottom: 55%; right: 15px">B</div>
+        </div>
+      </div>
+      <p>
+        One way that we did to optimize the algorithm is to detect when we are
+        out of the triangle for the second time. To be specific, we used the
+        fact that when we are in the circumscribed rectangle of the triangle, we
+        will be out of the triangle for at most twice. Therefore, we can stop
+        the iteration when we are out of the triangle for the second time. This
+        will make sure that we don't need to iterate through the whole
+        circumscribed rectangle of the triangle.
+      </p>
       <h3>Usage</h3>
       <p>
-        Barycentric coordinates are commonly used in computer graphics,
+        Barycentric Coordinates are commonly used in computer graphics,
         particularly in rendering techniques such as triangle interpolation and
         texture mapping.
       </p>
@@ -125,6 +195,25 @@
 
     <section id="task3">
       <h2>Task 3: Transforms (10 pts)</h2>
+      <div style="display: flex; justify-content: center; align-items: center">
+        <img src="Task3.png" alt="Task 3 Scrsht robot" style="width: 50%" />
+      </div>
+      <p>
+        created a cubeman in running posture by doing the following operations.
+      </p>
+      <ul>
+        <li>
+          rotate the head and torso by a certain angle to make it more natural.
+        </li>
+        <li>
+          adjusted the angle and position of the arms and legs to add dynamic to
+          the body.
+        </li>
+      </ul>
+    </section>
+
+    <section id="task4">
+      <h2>Task 4: Barycentric Coordinate (10 pts)</h2>
       <p>
         created a cubeman in running posture by doing the following operations.
       </p>
@@ -141,10 +230,58 @@
 
     <section id="task5">
       <h2>Task 5: "Pixel sampling" for texture mapping (15 pts)</h2>
+      <p>
+        Pixel sampling involves determining the color of a pixel in an image. In
+        texture mapping, I implemented it by mapping texture coordinates to
+        corresponding pixels and then sample on the mipmap of level 0. Following
+        are two ways to do pixel sampling:
+      </p>
       <ul>
-        <li>Clearly state the objectives of the project.</li>
-        <li>Outline what you aim to achieve through the project.</li>
+        <li>
+          Nearest Neighbor Sampling: When an image is resized or transformed,
+          each pixel in the new image is assigned the color value of the nearest
+          pixel in the original image. This method is quick and computationally
+          less intensive but can result in jagged edges and blocky artifacts,
+          especially when scaling up. The way we implemented it was to take the
+          float cordinates and round it to the nearest int cordinates.
+        </li>
+        <li>
+          Bilinear Interpolation: It considers the weighted average of the four
+          nearest pixels in the original image to determine the color of a pixel
+          in the new image. This results in smoother transitions and better
+          image quality during resizing or transformations. The way we
+          implemented this was to do interpolations between two reference points
+          and the current point. At first, we have four reference points
+          (vertices of the pixel the current point in in). We do interpolation
+          according to the graph below from the lecture.
+        </li>
       </ul>
+      <div style="display: flex; justify-content: center; align-items: center">
+        <img src="Task5-Bilinear-Graph.png" style="width: 60%" />
+      </div>
+      <h3>
+        Image Comparason between Nearest Neighbor Sampling Bilinear
+        Interpolation
+      </h3>
+      <div style="display: flex; justify-content: center; align-items: center">
+        <img src="Task5-Nearest-1.png" style="width: 35%" />
+        <img src="Task5-Nearest-16.png" style="width: 35%" />
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center">
+        <img src="Task5-Bilinear-1.png" style="width: 35%" />
+        <img src="Task5-Bilinear-16.png" style="width: 35%" />
+      </div>
+      <p>
+        From the above imagines, we can see the order of smoothness is nearest-1
+        < nearest-16 < bilinear-1 < bilinear-16. The differences between Nearest
+        Neighbor Sampling and Bilinear Interpolation becomes noticeable when
+        there are significant variations in texture magnification or reduction.
+        This is because that Nearest Neighbor Sampling assigns the nearest pixel
+        color, causing blockiness during size changes. While Bilinear
+        Interpolation blends neighboring pixels, offering smoother transitions.
+      </p>
+
+      <p></p>
     </section>
 
     <section id="task6">
