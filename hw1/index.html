@@ -1,7 +1,170 @@
 <html>
-	<head>
-	</head>
-	<body>
-		Homework 1 index.html here
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homework 1 Report</title>
+    <style>
+      body {
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans";
+        line-height: 1.6;
+        margin: 20px;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: #333;
+      }
+
+      section {
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        border-bottom: 2px solid #333;
+        padding-bottom: 5px;
+      }
+
+      h3 {
+        margin-bottom: 2px;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+      a:link {
+        color: purple;
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      a:visited {
+        color: purple;
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: #0abab5;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+
+      a:active {
+        color: #10098f;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+      *::first-letter {
+        text-transform: uppercase;
+      }
+      ul {
+        list-style-type: disc; /* Default is disc */
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Report for Homework 1: Rasterizer</h1>
+      <p>Date: Feb 11, 2024</p>
+      <p>
+        Group Member:
+        <a href="https://github.com/whydarren-6uom">Darren Wang</a>,
+        <a href="https://github.com/Sunnyweather1314">Jiayi Xu</a>
+      </p>
+    </header>
+
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>
+        In this assignment you will implement a simple rasterizer, including
+        features like drawing triangles, supersampling, hierarchical transforms,
+        and texture mapping with antialiasing.
+      </p>
+    </section>
+
+    <section id="task1">
+      <h2>Task 1: Drawing Single-Color Triangles (20 pts)</h2>
+      <h3>Solution Walk Though</h3>
+      <p>
+        In this task, we implemented a naive algorithm for pixel sampling within
+        triangle shapes. Initially, we utilized the provided helper function
+        <span style="background-color: rgb(220, 220, 217)">rasterize_line</span>
+        to draw the edges of the triangles. Subsequently, we determined the
+        position of the smallest bounding rectangle around the triangle. We then
+        iterated through every pixel within that rectangle, applying the
+        Barycentric Coordinate method to ascertain whether each pixel resides
+        inside the triangle and should be colored.
+      </p>
+      <h3>Optimization</h3>
+      <p>One way that we did to optimize the</p>
+      <h3>Usage</h3>
+      <p>
+        Barycentric coordinates are commonly used in computer graphics,
+        particularly in rendering techniques such as triangle interpolation and
+        texture mapping.
+      </p>
+    </section>
+
+    <section id="task2">
+      <h2>Task 2: Drawing Single-Color Triangles (20 pts)</h2>
+      <ul>
+        <li>Clearly state the objectives of the project.</li>
+        <li>Outline what you aim to achieve through the project.</li>
+      </ul>
+    </section>
+
+    <section id="task3">
+      <h2>Task 3: Transforms (10 pts)</h2>
+      <p>
+        created a cubeman in running posture by doing the following operations.
+      </p>
+      <ul>
+        <li>
+          rotate the head and torso by a certain angle to make it more natural.
+        </li>
+        <li>
+          adjusted the angle and position of the arms and legs to add dynamic to
+          the body.
+        </li>
+      </ul>
+    </section>
+
+    <section id="task5">
+      <h2>Task 5: "Pixel sampling" for texture mapping (15 pts)</h2>
+      <ul>
+        <li>Clearly state the objectives of the project.</li>
+        <li>Outline what you aim to achieve through the project.</li>
+      </ul>
+    </section>
+
+    <section id="task6">
+      <h2>
+        Task 6: "Level sampling" with mipmaps for texture mapping (25 pts)
+      </h2>
+
+      <p>
+        Level sampling is a technique used in computer graphics for efficient
+        rendering. It involves sampling pixels at different levels of detail,
+        starting with a coarse level and gradually refining to finer levels.
+        This approach balances computational resources with image quality,
+        optimizing the rendering process for various levels of complexity in
+        scenes.
+      </p>
+
+      <ul>
+        <li>Clearly state the objectives of the project.</li>
+        <li>Outline what you aim to achieve through the project.</li>
+      </ul>
+    </section>
+  </body>
 </html>
