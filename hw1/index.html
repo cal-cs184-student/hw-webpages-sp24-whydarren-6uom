@@ -304,11 +304,48 @@
 
     <section id="task4">
       <h2>Task 4: Barycentric Coordinate (10 pts)</h2>
-      <p></p>
-      <ul>
-        <li></li>
-        <li></li>
-      </ul>
+      <h3>Description about Barycentric Coordinates</h3>
+      <p>
+        Barycentric coordinates are a set of three values (usually denoted as
+        alpha, beta, and gamma) that represent the weights of the vertices of a
+        triangle in a coordinate system. These coordinates are used to express
+        any point within the triangle as a combination of its vertices.
+      </p>
+      <h3>Solution Walk Though</h3>
+      <p>
+        The function
+        <span style="background-color: rgb(220, 220, 217)"
+          >void rasterize_interpolated_color_triangle</span
+        >
+        is responsible for rasterizing a triangle and interpolating colors
+        across it using barycentric coordinates. The barycentric coordinates are
+        calculated for each pixel within the bounding box of the triangle, and
+        the corresponding color is interpolated based on these coordinates. The
+        code iterates through each pixel in the bounding box, and for each
+        pixel, it performs subpixel sampling. For each subpixel, it calculates
+        the barycentric coordinates using the function
+        <span style="background-color: rgb(220, 220, 217)">baryCalc</span> and
+        checks whether the point is inside the triangle by verifying if the
+        barycentric coordinates are within certain bounds. If the point is
+        inside the triangle, the color is interpolated using the barycentric
+        coordinates, and the result is stored in the
+        <span style="background-color: rgb(220, 220, 217)">sample_buffer</span>.
+        This process is repeated for all subpixels within each pixel of the
+        bounding box, effectively filling the entire triangle with interpolated
+        colors.
+      </p>
+      <h3>Result</h3>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        "
+      >
+        <img src="Task4.png" style="width: 70%" />
+        <p style="text-align: center; font-size: medium">basic/test7.svg</p>
+      </div>
     </section>
 
     <section id="task5">
@@ -384,6 +421,7 @@
       <h2>
         Task 6: "Level sampling" with mipmaps for texture mapping (25 pts)
       </h2>
+      <h3>Description about Level Sampling</h3>
       <p>
         Level sampling is a technique used in computer graphics for efficient
         rendering. It involves sampling pixels at different levels of detail,
@@ -392,27 +430,49 @@
         resolution changes over distances. It optimizes performance by adjusting
         image details based on viewing distance, saving computational resources.
       </p>
+      <h3>Solution Walk Though</h3>
       <p>
-        The way that we implemented level sampling invloves functions: get
-        level, sample and rasterize_textured_triangle.
+        The way that we implemented level sampling invloves functions:
+        <span style="background-color: rgb(220, 220, 217)"
+          >float Texture::get_level</span
+        >,
+        <span style="background-color: rgb(220, 220, 217)"
+          >Color Texture::sample</span
+        >
+        and
+        <span style="background-color: rgb(220, 220, 217)"
+          >rasterize_textured_triangle</span
+        >.
       </p>
       <ul>
         <li>
-          float Texture::get_level: We determine the level of mipmap of a
-          certain point by using the derivative vectors passed into the
-          function.
+          <span style="background-color: rgb(220, 220, 217)"
+            >float Texture::get_level</span
+          >: We determine the level of mipmap of a certain point by using the
+          derivative vectors passed into the function.
         </li>
         <div
           style="display: flex; justify-content: center; align-items: center"
         >
-          <img src="Task6-Level.png" style="width: 60%" />
+          <img src="Task6-Level.png" style="width: 75%" />
         </div>
         <li>
-          Color Texture::sample: Use the helper function get_level that we
-          implemented before to get a certain level of mipmap. And then decide
-          which combination of sampling methods that we want to use according to
-          field sp->lsm and sp->psm. Collect the sampled colour and return it to
-          the rasterize_textured_triangle function.
+          <span style="background-color: rgb(220, 220, 217)"
+            >Color Texture::sample</span
+          >: Use the helper function
+          <span style="background-color: rgb(220, 220, 217)"
+            >float Texture::get_level</span
+          >
+          that we implemented before to get a certain level of mipmap. And then
+          decide which combination of sampling methods that we want to use
+          according to field
+          <span style="background-color: rgb(220, 220, 217)">sp->lsm</span> and
+          <span style="background-color: rgb(220, 220, 217)">sp->psm</span>.
+          Collect the sampled color and return it to the
+          <span style="background-color: rgb(220, 220, 217)"
+            >void RasterizerImp::rasterize_textured_triangle</span
+          >
+          function.
         </li>
         <li>
           <span style="background-color: rgb(220, 220, 217)"
