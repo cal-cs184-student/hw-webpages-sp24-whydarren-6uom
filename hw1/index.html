@@ -72,6 +72,29 @@
       ul {
         list-style-type: disc; /* Default is disc */
       }
+      table {
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans";
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 15px;
+      }
+
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr td:nth-child(1) {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
     </style>
   </head>
 
@@ -494,6 +517,96 @@
           sample function that we implemented above.
         </li>
       </ul>
+      <h3>Result</h3>
+      <p>Tested with ISO 12233 Test Chart. &copy; Cornell University.</p>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <img src="Task6-0-N.png" style="width: 100%" />
+          <p style="text-align: center; font-size: medium">
+            LSM = Zero, PSM = Nearest
+          </p>
+        </div>
+        <div style="flex-direction: column">
+          <img src="Task6-0-L.png" style="width: 100%" />
+          <p style="text-align: center; font-size: medium">
+            LSM = Zero, PSM = Bilinear
+          </p>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: center; margin-bottom: 15px">
+        <div style="flex-direction: column">
+          <img src="Task6-L-N.png" style="width: 100%" />
+          <p style="text-align: center; font-size: medium">
+            LSM = Nearest, PSM = Nearest
+          </p>
+        </div>
+        <div style="flex-direction: column">
+          <img src="Task6-L-L.png" style="width: 100%" />
+          <p style="text-align: center; font-size: medium">
+            LSM = Nearest, PSM = Bilinear
+          </p>
+        </div>
+      </div>
+      <h3>Comparison of Performances</h3>
+      <table>
+        <tr>
+          <th>Methods</th>
+          <th>Pixel Sampling</th>
+          <th>Level Sampling</th>
+          <th>Number of Samples per Pixel</th>
+        </tr>
+        <tr>
+          <td>Description</td>
+          <td>Each pixel is sampled at its center.</td>
+          <td>
+            Samples are taken at different levels of detail (mipmaps) based on
+            pixel size.
+          </td>
+          <td>Multiple samples are taken within each pixel and averaged.</td>
+        </tr>
+        <tr>
+          <td>Speed</td>
+          <td>
+            Fastest among the three methods since it samples only once per
+            pixel.
+          </td>
+          <td>
+            Moderately fast. The performance depends on mipmapping
+            implementation.
+          </td>
+          <td>
+            Slower compared to pixel sampling, especially with a higher number
+            of samples.
+          </td>
+        </tr>
+        <tr>
+          <td>Memory Usage</td>
+          <td>
+            Lower memory requirements as it takes only one sample per pixel.
+          </td>
+          <td>
+            Higher memory requirements due to storing multiple levels of detail.
+          </td>
+          <td>
+            Consumes more memory with an increased number of samples per pixel.
+          </td>
+        </tr>
+        <tr>
+          <td>Antialiasing Power</td>
+          <td>
+            Lower antialiasing quality compared to other methods due to fewer
+            samples.
+          </td>
+          <td>
+            Provides better antialiasing by considering different levels of
+            detail based on pixel size.
+          </td>
+          <td>
+            Offers high antialiasing quality by averaging multiple samples
+            within each pixel.
+          </td>
+        </tr>
+      </table>
     </section>
   </body>
 </html>
