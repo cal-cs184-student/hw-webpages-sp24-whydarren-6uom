@@ -8,8 +8,10 @@
         font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
           "Lucida Sans";
         line-height: 1.6;
-        margin-left: 20%;
-        margin-right: 20%;
+        margin-top: 5%;
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-bottom: 10%;
       }
 
       h1,
@@ -477,9 +479,19 @@
         <li>
           <span style="background-color: rgb(220, 220, 217)"
             >void RasterizerImp::rasterize_textured_triangle</span
-          >: We reused a lot of the codes from task 2. The difference is that we
-          did three Barycentric interpolations separately on point(x, y), (x+1,
-          y), (x, y+1) and
+          >: We reused a lot of the codes from Task 2. The difference is that we
+          did three Barycentric interpolations separately on point (x, y), (x+1,
+          y), (x, y+1) and then calculate the Vector parameters in sp by doing
+          dot product of
+          <span style="background-color: rgb(220, 220, 217)"
+            >[alpha, beta, gamma]</span
+          >
+          with
+          <span style="background-color: rgb(220, 220, 217)">[u0, u1, u2]</span>
+          and
+          <span style="background-color: rgb(220, 220, 217)">[v0, v1, v2]</span
+          >. Finally, we fill the framebuffer with the color returned from the
+          sample function that we implemented above.
         </li>
       </ul>
     </section>
