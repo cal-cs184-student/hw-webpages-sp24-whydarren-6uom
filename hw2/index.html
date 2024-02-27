@@ -148,24 +148,18 @@
         <span style="background-color: rgb(220, 220, 217)"
           >std::vector&lt;Vector2D&gt; controlPoints
         </span>
-        of length n, applied the function
+        of length n, applied the function \[ p_i' = \text{lerp}(p_i, p_{i+1}, t)
+        = (1 - t) * p_i + t * p_{i+1} \] to every point
         <span style="background-color: rgb(220, 220, 217)"
-          >\[ p_i' = \text{lerp}(p_i, p_{i+1}, t) = (1 - t) * p_i + t * p_{i+1}
-          \]</span
-        >
-        to every point
-        <span style="background-color: rgb(220, 220, 217)"
-          >&lt;Vector2D&gt; p_i and p_{i_1}</span
+          >&lt;Vector2D&gt; p_i and p_i_1</span
         >, returning a new
         <span style="background-color: rgb(220, 220, 217)"
-          >&lt;Vector2D&gt; control point curr</span
-        >. We will then push back
-        <span style="background-color: rgb(220, 220, 217)">curr</span> to a new
+          >&lt;Vector2D&gt; controlPoint curr</span
+        >. We will then push back "curr" to a new
         <span style="background-color: rgb(220, 220, 217)"
           >std::vector &lt;Vector2D&gt; nextlevel
         </span>
-        of length p - 1. Finally, we will return
-        <span style="background-color: rgb(220, 220, 217)">nextlevel</span>.
+        of length p - 1. Finally, we will return "nextlevel".
       </p>
 
       <h3>Screenshots</h3>
