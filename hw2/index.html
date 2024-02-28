@@ -478,8 +478,152 @@
 
     <section id="S2P6">
       <h2>Task 6: Loop Subdivision for Mesh Upsampling (25 pts)</h2>
-      <h3></h3>
-      <p></p>
+      <h3>Steps</h3>
+      <ol>
+        <li>
+          <p>Generating newPosition for all old vertices</p>
+          Loop through every vertex in the mesh and use the position update
+          function for old vertex
+          <span style="background-color: rgb(220, 220, 217)"
+            >(1 - n * u) * original_position + u *
+            original_neighbor_position_sum</span
+          >
+          where
+          <span style="background-color: rgb(220, 220, 217)"
+            >original_position</span
+          >
+          is the current vertex's position and
+          <span style="background-color: rgb(220, 220, 217)"
+            >original_neighbor_position_sum</span
+          >
+          is the sum of the positions of all neighbor vertices of the current
+          vertex. We resued our code from Part3 to get all the neighbor
+          vertices. After we get the position, we put it into
+          <span style="background-color: rgb(220, 220, 217)"
+            >v->newPosition</span
+          >.
+        </li>
+        <li>
+          <p>Generating newPosition for all new vertices</p>
+          Loop through every edge in the mesh and use the position update
+          function for new vertex
+          <span style="background-color: rgb(220, 220, 217)"
+            >3/8 * (A + B) + 1/8 * (C + D)</span
+          >
+          where
+          <span style="background-color: rgb(220, 220, 217)">A, B</span> and
+          <span style="background-color: rgb(220, 220, 217)">C, D</span> and not
+          neighbours of each other. We will be storing new positions of new
+          vertex in
+          <span style="background-color: rgb(220, 220, 217)"
+            >e->newPosition</span
+          >. This works because after we split, each edge will have a new vertex
+          on it, so that we can get the new position of the new vertex by first
+          getting the edge that the new vertex is on and then get the previously
+          stored newPosition value.
+        </li>
+        <li>
+          <p>Spliting each edge</p>
+          Loop through each edge of the mesh and call the
+          <span style="background-color: rgb(220, 220, 217)">splitEdge</span>
+          function on one edge if
+          <span style="background-color: rgb(220, 220, 217)">!(e->isNew)</span>
+          and the two vertices at the end of e are not new. Then we set the
+          <span style="background-color: rgb(220, 220, 217)">isNew</span>
+          indicator of the two subEdge created by spliting
+          <span style="background-color: rgb(220, 220, 217)">e</span> as false
+          and the
+          <span style="background-color: rgb(220, 220, 217)">isNew</span>
+          indicator of the other two newly created edges by split as true. Set
+          the
+          <span style="background-color: rgb(220, 220, 217)">isNew</span>
+          indicator of the returned vertex by
+          <span style="background-color: rgb(220, 220, 217)">splitEdge</span>
+          function as true. Finally, we set the
+          <span style="background-color: rgb(220, 220, 217)">newPosition</span>
+          field of the returned vertex as
+          <span style="background-color: rgb(220, 220, 217)"
+            >e->newPosition</span
+          >.
+        </li>
+        <li>
+          <p>Fliping edges</p>
+          Loop through each edge of the mesh and check if
+          <span style="background-color: rgb(220, 220, 217)">e->isNew</span> is
+          true and if the
+          <span style="background-color: rgb(220, 220, 217)">isNew</span> field
+          of the two vertices at the end of e are not equal (one new and one
+          old). If yes, flip the edge.
+        </li>
+        <li>
+          <p>Setting new positions</p>
+          Loop through each vertex of the mesh and update
+          <span style="background-color: rgb(220, 220, 217)"
+            >v->position = v->newPosition</span
+          >
+          only if it is an old vertex. Then change
+          <span style="background-color: rgb(220, 220, 217)"
+            >v->isNew = false</span
+          >.
+        </li>
+      </ol>
+      <h3>Interesting Implementation and Debugging</h3>
+      <p>
+        For debugging, we did not really use any helper functions. We just used
+        printing messages and drawing down how the mesh acts as we walk through
+        our code. For Implementation, we were struggling with making sure we are
+        only fliping "newly created edges with one new vertex and one old
+        vertex". Before the current way, we tried to add a bool field to
+        EdgeIter called
+        <span style="background-color: rgb(220, 220, 217)">splited</span>. With
+        this field, we can set
+        <span style="background-color: rgb(220, 220, 217)">isNew</span> of all
+        edges around the new vertex as true so that in the split interation, we
+        only check if
+        <span style="background-color: rgb(220, 220, 217)"
+          >e->isNew == false</span
+        >. While in the flip interation, we check if
+        <span style="background-color: rgb(220, 220, 217)"
+          >e->splited == true</span
+        >
+        and if the edge has one new vertex and one old vertex.
+      </p>
+      <h3>Observations</h3>
+      <p>
+        After Subdividing, we noticed that the sharp edges and corners got
+        rounded in render view. We tried pre-spiliting but it creates some caves
+        on the smooth surface.
+      </p>
+
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <img src="S2P6-0.png" style="width: 100%" />
+          <p>no subdivide</p>
+          <img src="S2P6-1.png" style="width: 100%" />
+          <p>subdivide 1</p>
+        </div>
+        <div style="flex-direction: column">
+          <img src="S2P6-2.png" style="width: 100%" />
+          <p>subdivide 2</p>
+          <img src="S2P6-3.png" style="width: 100%" />
+          <p>subdivide 2 with grid</p>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <img src="S2P6-4.png" style="width: 100%" />
+          <p>pre-splited</p>
+          <img src="S2P6-5.png" style="width: 100%" />
+          <p>subdivide 1</p>
+        </div>
+        <div style="flex-direction: column">
+          <img src="S2P6-6.png" style="width: 100%" />
+          <p>subdivide 2</p>
+          <img src="S2P6-7.png" style="width: 100%" />
+          <p>subdivide max with render</p>
+        </div>
+      </div>
     </section>
   </body>
 </html>
