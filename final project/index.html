@@ -1,0 +1,236 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      id="MathJax-script"
+      async
+      src="https://polyfill.io/v3/|latest?features=es6"
+    ></script>
+    <title>Final Project Proposal: Interior Design Rendering</title>
+    <script
+      type="text/javascript"
+      async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"
+    ></script>
+    <style>
+      body {
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans";
+        line-height: 1.6;
+        margin-top: 5%;
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-bottom: 10%;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: #333;
+      }
+
+      section {
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        border-bottom: 2px solid #333;
+        padding-bottom: 5px;
+      }
+
+      h3 {
+        margin-bottom: 2px;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+      a:link {
+        color: purple;
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      a:visited {
+        color: purple;
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: #0abab5;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+
+      a:active {
+        color: #10098f;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+      *::first-letter {
+        text-transform: uppercase;
+      }
+      ul {
+        list-style-type: disc; /* Default is disc */
+      }
+      table {
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans";
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 15px;
+      }
+
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr td:nth-child(1) {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Final Project Proposal</h1>
+      <p>Date: Apr 02, 2024</p>
+      <p>
+        Group Member:
+        <a href="https://github.com/whydarren-6uom">Darren Wang</a>,
+        <a href="https://github.com/Sunnyweather1314">Jiayi Xu</a>,
+        <a href="https://github.com/eugene-yoojin-han">Eugene Han</a>,
+        <a href="https://github.com/MillerHollinger">Miller Hollinger</a>
+      </p>
+    </header>
+
+    <section id="overview">
+      <h2>Project Summary</h2>
+      <p>
+        For this project, we will develop an add-on for Blender that allows
+        users to procedurally generate furniture of four different kinds:
+        dressers, tables, chairs, and beds. Both the geometry and texture data
+        of each furniture will be different each time the addon is used,
+        allowing for a wide variety of unique furniture to be created.
+      </p>
+    </section>
+
+    <section id="Part1">
+      <h2>Problem Description</h2>
+      <p>
+        Building multiple different shapes of furniture with realistic, detailed
+        texture takes a long time as it requires complex modeling skills for
+        each individual object. As a result, it takes too much time when
+        modeling a scene that involves a ton of different objects, which can
+        cause potential problems in the workflow when it comes to building a
+        massive project within a tight deadline. To avoid such problems caused
+        by this time-consuming modeling process, speeding up the development
+        process is necessary, which can be achieved by implementing an add-on
+        for Blender that procedurally generated furniture and texture.
+      </p>
+    </section>
+
+    <section id="Part2">
+      <h2>Goals and Deliverables</h2>
+      <h3>Goals:</h3>
+      <ul>
+        <li>Learn how to use and code in blender.</li>
+        <li>Build and render furniture needed for a bedroom.</li>
+        <li>
+          Adjust the settings so that it changes the textures and geometries for
+          furniture.
+        </li>
+        <li>
+          Deliver the code in Python for the “add-on” function in Blender that
+          is able to build and render all the furniture (Dresser, Table, Chair
+          and Bed), and then change the geometry and textures.
+        </li>
+      </ul>
+      <ul>
+        <h3>Deliverables:</h3>
+        <li>
+          An available add-on that is able to randomly generate the whole
+          settings of a simulated bedroom including furniture and their
+          geometries and textures.
+        </li>
+      </ul>
+    </section>
+
+    <section id="Part3">
+      <h2>Schedule</h2>
+      <h3>Week 1: April 2 - 9</h3>
+      <ul>
+        <li>Everyone downloads Blender.</li>
+        <li>Everyone familiarizes themselves with Blender.</li>
+        <li>
+          Everyone researches the Blender API to understand how to write code
+          for Blender.
+        </li>
+        <li>We set up a GitHub for the project.</li>
+      </ul>
+      <h3>Week 2: April 9 - 16</h3>
+      <ul>
+        <li>Meet to discuss the structure of our code.</li>
+        <li>Write texture generation code.</li>
+        <li>Wood (Miller)</li>
+        <li>Plastic (Eugene)</li>
+        <li>Metal (Darren)</li>
+        <li>Cloth (Jiayi)</li>
+      </ul>
+      <h3>Week 3: April 16 - 23</h3>
+      <ul>
+        <li>Finalize texture generation code.</li>
+        <li>Start furniture generation code (if you have time).</li>
+        <li>Dresser (Miller)</li>
+        <li>Table (Eugene)</li>
+        <li>Chair (Darren)</li>
+        <li>Bed (Jiayi)</li>
+      </ul>
+
+      <h3>Week 4: April 23 - 30</h3>
+      <ul>
+        <li>Write + finish up our furniture generation code.</li>
+      </ul>
+      <h3>Week 5: April 30 - May 1</h3>
+      <ul>
+        <li>Prepare the final presentation!</li>
+        <li>
+          Any last-minute work to put the addon together + make it available
+          online.
+        </li>
+        <li>Any last-minute work in general.</li>
+      </ul>
+    </section>
+
+    <section id="Part4">
+      <h2>Resources</h2>
+      <ul>
+        <li>https://docs.blender.org/api/current/info_quickstart.html</li>
+        <li>https://www.youtube.com/watch?v=90XX4CIQsV0</li>
+        <li>
+          https://medium.com/@LEM_ing/procedural-generation-of-3d-objects-with-three-js-9874806da449
+        </li>
+        <li>
+          https://www.youtube.com/watch?v=B0J27sf9N1Y&list=PLjEaoINr3zgEPv5y--4MKpciLaoQYZB1Z
+        </li>
+      </ul>
+    </section>
+  </body>
+</html>
