@@ -1,0 +1,797 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      id="MathJax-script"
+      async
+      src="https://polyfill.io/v3/|latest?features=es6"
+    ></script>
+    <title>Homework 3 Report</title>
+    <script
+      type="text/javascript"
+      async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"
+    ></script>
+    <style>
+      body {
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans";
+        line-height: 1.6;
+        margin-top: 5%;
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-bottom: 10%;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: #333;
+      }
+
+      section {
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        border-bottom: 2px solid #333;
+        padding-bottom: 5px;
+      }
+
+      h3 {
+        margin-bottom: 2px;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+      a:link {
+        color: purple;
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      a:visited {
+        color: purple;
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: #0abab5;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+
+      a:active {
+        color: #10098f;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+      *::first-letter {
+        text-transform: uppercase;
+      }
+      ul {
+        list-style-type: disc; /* Default is disc */
+      }
+      table {
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans";
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 15px;
+      }
+
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr td:nth-child(1) {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Report for Homework 3: Pathtracer</h1>
+      <p>Date: Mar 4, 2024</p>
+      <p>
+        Group Member:
+        <a href="https://github.com/whydarren-6uom">Darren Wang</a>,
+        <a href="https://github.com/Sunnyweather1314">Jiayi Xu</a>
+      </p>
+    </header>
+
+    <section id="overview">
+      <h2>Homework Description</h2>
+      <p>
+        In this project, we developed a pathtracer with advanced features. In
+        Part 1, we focused on ray generation and scene intersection using
+        techniques like perspective projection and the Moller Trumbore algorithm
+        for triangle intersection. Part 2 introduced a Bounding Volume Hierarchy
+        (BVH) to accelerate ray tracing, reducing rendering times for complex
+        scenes. We covered steps such as computing bounding boxes, choosing
+        splitting axes, and recursively constructing the BVH. In Part 3, we
+        enhanced the pathtracer with direct illumination, comparing uniform
+        hemisphere sampling with importance sampling. The latter provided
+        smoother results in light-surface interactions. Part 4 explored global
+        illumination, addressing indirect lighting, maximum ray depth, Russian
+        Roulette rendering, and sample-per-pixel rates. Screenshots illustrated
+        the impact of settings on visual richness. Part 5 delved into adaptive
+        sampling, dynamically adjusting samples based on pixel color variance.
+        Confidence intervals and early termination for low-variance pixels
+        ensured computational efficiency without compromising quality. Our
+        project showcased a comprehensive pathtracer with optimizations,
+        demonstrating our grasp of computer graphics principles and effective
+        application in a complex rendering environment.
+      </p>
+    </section>
+
+    <section id="Part1">
+      <h2>Part 1: Ray Generation and Scene Intersection</h2>
+      <h3>Generating Rays and Primitive Intersection</h3>
+      <p>
+        We determine the original point's position and project it onto the
+        screen. To find
+        <span style="background-color: rgb(220, 220, 217)">new_x</span> and
+        <span style="background-color: rgb(220, 220, 217)">new_y</span>, we
+        center the original rectangle screen defined by (0, 0) and (1, 1) at (0,
+        0), resulting in (x - 0.5, y - 0.5). The relative positions of
+        <span style="background-color: rgb(220, 220, 217)">x</span> and
+        <span style="background-color: rgb(220, 220, 217)">y</span> in the
+        original screen remain the same as
+        <span style="background-color: rgb(220, 220, 217)">new_x</span> and
+        <span style="background-color: rgb(220, 220, 217)">new_y</span>. This
+        leads to the equations:
+        <br />
+        \[\frac{(x - 0.5)}{1} = \frac{\text{new_x}}{(2 \cdot
+        \tan(\text{radians(hFov) * .5}))}\] \[\frac{(y - 0.5)}{1} =
+        \frac{\text{new_y}}{(2 \cdot \tan(\text{radians(vFov) * .5}))}\]
+        <br />
+        We obtain
+        <span style="background-color: rgb(220, 220, 217)"
+          >Vector3D ray_vector = Vector3D(new_x, new_y, -1.0)</span
+        >. After obtaining the position of the projected point, we calculate the
+        direction vector of
+        <span style="background-color: rgb(220, 220, 217)">result_ray</span>
+        using matrix multiplication
+        <span style="background-color: rgb(220, 220, 217)"
+          >c2w * ray_vector</span
+        >. Finally, we set the visible boundary for this ray between nClip and
+        fClip, which we will update later.
+      </p>
+      <h3>Process walkthrough</h3>
+      <p>
+        Ray generation begins with casting rays from the virtual camera into the
+        scene. Each ray is defined by its origin (the camera's position) and a
+        direction (pointing through a pixel on the camera plane). These rays
+        traverse the scene, interacting with objects along their directions. The
+        primitive intersection stage involves determining if a ray intersects
+        with any geometric primitives(sphere, triangle, etc.) in the scene. This
+        process employs the function
+        <span style="background-color: rgb(220, 220, 217)"
+          >Triangle::intersect</span
+        >
+        or
+        <span style="background-color: rgb(220, 220, 217)"
+          >Sphere::intersect</span
+        >. When an intersection is detected, information about the point of
+        intersection, such as its position, surface properties, and material
+        characteristics, will be upadted in the struct
+        <span style="background-color: rgb(220, 220, 217)"
+          >Intersection* isect</span
+        >.
+      </p>
+
+      <h3>triangle intersection algorithm</h3>
+      <p>
+        We used the Moller Trumbore Algorithm that we have discussed in lecture.
+        After following the steps and get the vector containing [t, alpha,
+        beta], we first see if t is between
+        <span style="background-color: rgb(220, 220, 217)">r.min_t</span> and
+        <span style="background-color: rgb(220, 220, 217)">r.max_t</span> and if
+        alpha and beta are within [0, 1]. If any of the condition fails, the
+        intersection is not suppose to happen and we return false. If both
+        conditions are met, we update the intersection information to
+        <span style="background-color: rgb(220, 220, 217)"
+          >Intersection* isect</span
+        >, including the filed t, primitive, bsdf and n(calculated by doing
+        barycentric interpolation with the current three norms and the alpha,
+        beta, gamma values that we calculated above.) We also updated ray.max_t
+        to t.
+      </p>
+      <h3>Screenshots</h3>
+
+      <div style="display: flex; justify-content: center; align-items: center">
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+          "
+        >
+          <img src="task1_bunny.png" style="width: 100%" />
+          <img src="task1_banana.png" style="width: 100%" />
+          <img src="task1_CBspheres.png" style="width: 100%" />
+        </div>
+      </div>
+    </section>
+
+    <section id="Part2">
+      <h2>Part 2: Bounding Volume Hierarchy</h2>
+      <h3>BVH construction algorithm</h3>
+      <p>Following are our steps for constructing BVH</p>
+      <ul>
+        <li>
+          <b>Compute the Bounding Box (bbox)</b>: We start by computing the
+          bounding box that encloses all the primitives between
+          <span style="background-color: rgb(220, 220, 217)">start</span> and
+          <span style="background-color: rgb(220, 220, 217)">end</span>. The
+          bounding box is computed by iteratively expanding it to include the
+          bounding boxes of individual primitives using function
+          <span style="background-color: rgb(220, 220, 217)">bbox.expand</span>.
+        </li>
+        <li>
+          <b>Choose Splitting Axis</b>: We then choose the splitting axis based
+          on the maximum extent of the bounding box. The axis is selected to be
+          the one along which the bounding box has the maximum size. This
+          heuristic helps achieve a more balanced partitioning.
+        </li>
+        <li>
+          <b>Check Leaf Node Condition</b>: If the number of primitives in the
+          current range is less than or equal to
+          <span style="background-color: rgb(220, 220, 217)">max_leaf_size</span
+          >, the current node becomes a leaf node. We just create a leaf node
+          and set its start and end field with the input
+          <span style="background-color: rgb(220, 220, 217)">start</span> and
+          <span style="background-color: rgb(220, 220, 217)">end</span>.
+        </li>
+        <li>
+          <b>Partition Primitives</b>: If the number of primitives exceeds
+          <span style="background-color: rgb(220, 220, 217)">max_leaf_size</span
+          >, we partition the primitives along the chosen axis. We used the
+          function
+          <span style="background-color: rgb(220, 220, 217)">nth_element</span>
+          to partially sort the primitives based on their centroids along the
+          selected axis. This effectively places the median primitive at the
+          position that separates the primitives into two groups.
+        </li>
+        <li>
+          <b>Construction</b>: Then, we recursively constructs the left and
+          right child nodes of the current node, each covering a subset of the
+          primitives. The left child covers the range [start, start + size/2),
+          and the right child covers the range [start + size/2, end]. Finally,
+          we return the current node.
+        </li>
+      </ul>
+      <h3>screenshots of large images with normal shading</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <img src="task2_beast.png" style="width: 100%" />
+          <img src="task2_peter.png" style="width: 100%" />
+
+          <img src="task2_cow.png" style="width: 100%" />
+          <img src="task2_CBlucy.png" style="width: 100%" />
+        </div>
+      </div>
+      <h3>Render Time Comparison Analysis</h3>
+      <p>
+        Before implementing BVH acceleration, the rendering time for cow and the
+        other .dae file shown in the screenshots below were close to a minute.
+        After implementing BVH, the rendering time for cow is around 1 second.
+        And all the other large .dae files(the ones above) all takes less than
+        1.5 seconds to complete. The speed-up is much faster, we think this is
+        because once a ray does not intersect with a node's bbox, we do not test
+        for intersection between the ray and the primitives contained by the
+        node, which saves us a lot of computation.
+      </p>
+    </section>
+
+    <section id="Part3">
+      <h2>Part 3: Direct Illumination</h2>
+      <h3>
+        Walkthough for
+        <span style="background-color: rgb(220, 220, 217)"
+          >Vector3D PathTracer::estimate_direct_lighting_hemisphere</span
+        >
+      </h3>
+      <ul>
+        <li>
+          <b>Sampling Loop for Direct Lighting</b>: We start a num_samples times
+          loop to sample the hemisphere around the hit point, considering the
+          lights in the scene.
+        </li>
+        <li>
+          <b>Sample Light</b>: Within the loop, we get the sampled light by
+          calling
+          <span style="background-color: rgb(220, 220, 217)"
+            >isect.bsdf->sample_f</span
+          >. This function returns the sampled reflected direction wj and the
+          corresponding probability density function (pdf). Then, we multiply
+          the direction vector by
+          <span style="background-color: rgb(220, 220, 217)">o2w</span> to get
+          the transformed vector and normalize it. Then, we construct the
+          sampleray using hit_p as origin and the normalized vector as direction
+          with its min_t set to EPS_F and max_t set to INF_D.
+        </li>
+        <li>
+          <b>Check for Intersection</b>: If sampleray intersects with the scene,
+          we calculate the contribution for L_out by this sampleray using the
+          function
+          <span style="background-color: rgb(220, 220, 217)"
+            >lightIsect.bsdf->get_emission() * f * abs_cos_theta(wj) / pdf</span
+          >
+          and add it to L_out.
+        </li>
+        <li>
+          <b>Normalizing Output</b>: Finally, we return the light estimator
+          equals to L_out / num_samples.
+        </li>
+      </ul>
+
+      <h3>
+        Walkthough for
+        <span style="background-color: rgb(220, 220, 217)"
+          >Vector3D PathTracer::estimate_direct_lighting_importance</span
+        >
+      </h3>
+      <ul>
+        <li>
+          Calculate the hit point <code>hit_p</code> by extending the ray to the
+          intersection distance <code>isect.t</code>. Determine the direction of
+          the ray coming from the hit point (<code>w_out</code>) by transforming
+          the negative ray direction from world to object space.
+        </li>
+
+        <li>
+          Initialize variables for the loop over lights, determining the number
+          of samples based on whether the light is a delta light. For delta
+          lights, take only one sample; otherwise, use the variable
+          <code>ns_area_light</code>.
+        </li>
+
+        <li>
+          Inside the loop over light sources, sample the light using the
+          <code>sample_L</code> function to obtain the direction
+          <code>wj</code> towards the light, the distance to the light
+          <code>distToLight</code>, and the probability density function
+          <code>pdf</code>. Transform <code>wj</code> to object space and
+          normalize it.
+        </li>
+
+        <li>
+          Create a shadow ray from the hit point to the sampled light direction,
+          setting its minimum and maximum t-values to avoid self-intersection.
+          Perform a shadow ray intersection test with the BVH, checking for
+          obstructions between the hit point and the light source. Skip the
+          sample if an intersection occurs within the valid range.
+        </li>
+
+        <li>
+          Calculate the contribution of this light sample to the overall
+          lighting at the hit point. This involves evaluating the emission from
+          the light, the bidirectional scattering distribution function (BSDF)
+          using the <code>f</code> function, the cosine term, and dividing by
+          the probability density function. Accumulate these contributions for
+          all samples and lights.
+        </li>
+
+        <li>
+          The result <code>L_out</code> represents the estimated direct lighting
+          at the intersection point, considering importance sampling from light
+          sources. Return this result, taking into account the number of samples
+          used for each light source.
+        </li>
+      </ul>
+
+      <h3>
+        Comparison and Analysis of uniform hemisphere sampling and lighting
+        sampling
+      </h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task3_spheres_H.png" style="width: 100%" />
+            <figcaption>
+              CBspheres_lambertian.dae using estimate_direct_lighting_hemisphere
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="task3_spheres_I.png" style="width: 100%" />
+            <figcaption>
+              CBspheres_lambertian.dae using estimate_direct_lighting_importance
+            </figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task3_bunny_H.png" style="width: 100%" />
+            <figcaption>
+              CBbunny.dae using estimate_direct_lighting_hemisphere
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="task3_bunny_I.png" style="width: 100%" />
+            <figcaption>
+              CBbunny.dae using estimate_direct_lighting_importance
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task3_coil_H.png" style="width: 100%" />
+            <figcaption>
+              CBcoil.dae using estimate_direct_lighting_hemisphere
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="task3_coil_I.png" style="width: 100%" />
+            <figcaption>
+              CBcoil.dae using estimate_direct_lighting_importance
+            </figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task3_CBgems_H.png" style="width: 100%" />
+            <figcaption>
+              CBgems.dae using estimate_direct_lighting_hemisphere
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="task3_CBgems_I.png" style="width: 100%" />
+            <figcaption>
+              CBgems.dae using estimate_direct_lighting_importance
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+      <p>
+        Uniform hemisphere sampling provides an unbiased, yet more visually
+        noisy representation, especially in regions where there are intricate
+        interactions between light and surfaces. In contrast, light sampling, by
+        strategically sampling directions based on the light source, tends to
+        produce smoother results with reduced noise levels in areas affected by
+        soft shadows.
+      </p>
+
+      <h3>
+        Comparison Between Noise Levels in Soft Shadows Using Lighting Sampling
+      </h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task3_ bunny_1_1.png" style="width: 100%" />
+            <figcaption>CBbunny.dae l = 1, s = 1</figcaption>
+          </figure>
+          <figure>
+            <img src="task3_ bunny_1_4.png" style="width: 100%" />
+            <figcaption>CBbunny.dae l = 4, s = 1</figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task3_ bunny_1_16.png" style="width: 100%" />
+            <figcaption>CBbunny.dae l = 16, s = 1</figcaption>
+          </figure>
+          <figure>
+            <img src="task3_ bunny_1_64.png" style="width: 100%" />
+            <figcaption>CBbunny.dae l = 64, s = 1</figcaption>
+          </figure>
+        </div>
+      </div>
+      <p>
+        As the number of light rays (l) increases in the rendering process with
+        light sampling, the transitions of shadows become smoother and the
+        presence of noisy pixels diminishes. This improvement is attributed to
+        the increased number of samples per pixel, leading to more accurate and
+        refined estimations of soft shadows, resulting in a visually smoother
+        and less noisy appearance in the illuminated regions of the scene.
+      </p>
+    </section>
+
+    <section id="Part4">
+      <h2>Part 4: Global Illumination</h2>
+      <h3>Implementation</h3>
+      <ul>
+        <li>
+          Get Vertex: obtains iterators for the four vertices in the diagram
+          connected to the halfedges. These iterators are used to update the
+          vertices' halfedge pointers after the flip.
+        </li>
+        <li>
+          Get Face: obtains iterators for the two faces, namely Left and Right,
+          that the two halfedges being flipped belong to. These iterators are
+          used to update the faces' halfedge pointers after the flip.
+        </li>
+        <li>
+          Update Halfedge Neighbors (via
+          <span style="background-color: rgb(220, 220, 217)"
+            >setNeighbors()</span
+          >): updates the neighbor pointers of the four halfedges involved in
+          the flip. This step reconfigures the connections between halfedges to
+          reflect the flipped edge.
+        </li>
+        <li>
+          Update Halfedge Next Pointers: updates the "next" pointers of two
+          halfedges to reverse their order in the counter-clockwise direction
+          around their respective faces.
+        </li>
+        <li>
+          Update Vertex Halfedge Pointers: updates the "halfedge" pointers of
+          the four vertices involved in the flip to point to their new
+          corresponding halfedges after the flip.
+        </li>
+      </ul>
+
+      <h3>Screenshots for global (direct and indirect) illumination</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <img src="task4_global_illumination.png" style="width: 100%" />
+          <img src="task4_global_illumination_1.png" style="width: 100%" />
+          <img src="task4_global_illumination_2.png" style="width: 100%" />
+        </div>
+      </div>
+
+      <h3>
+        Comparison between rendered views using only direct illumination or
+        indirect illumination
+      </h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_direct_illumination.png" style="width: 100%" />
+            <figcaption>using only direct illumination</figcaption>
+          </figure>
+          <figure>
+            <img src="task4_indirect_illumination.png" style="width: 100%" />
+            <figcaption>using only indirect illumination</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <h3>
+        ScreenShots and Analysis for mth bounce of light for CBbunny.dae with
+        isAccumBounces=false
+      </h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_bounce_0.png" style="width: 100%" />
+            <figcaption>m = 0</figcaption>
+          </figure>
+          <figure>
+            <img src="task4_bounce_1.png" style="width: 100%" />
+            <figcaption>m = 1</figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_bounce_2.png" style="width: 100%" />
+            <figcaption>m = 2</figcaption>
+          </figure>
+          <figure>
+            <img src="task4_bounce_3.png" style="width: 100%" />
+            <figcaption>m = 3</figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_bounce_4.png" style="width: 100%" />
+            <figcaption>m = 4</figcaption>
+          </figure>
+          <figure>
+            <img src="task4_bounce_5.png" style="width: 100%" />
+            <figcaption>m = 5</figcaption>
+          </figure>
+        </div>
+      </div>
+      <p>
+        The 2nd bounce represents light that bounces once off surfaces before
+        reaching the camera, and the 3rd bounce extends this process further. We
+        can see that as m gets highter, the rendered lights gets dimmer and and
+        smoother. This is because there are loss in light reflection using the
+        process according to the contiunous probability we we add in every
+        recursive call in
+        <span style="background-color: rgb(220, 220, 217)"
+          >at_least_one_bounce_radiance</span
+        >
+      </p>
+
+      <h3>
+        ScreenShots and Analysis for mth bounce of light for CBbunny.dae with
+        isAccumBounces = true
+      </h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_max_depth_0.png" style="width: 100%" />
+            <figcaption>m = 0</figcaption>
+          </figure>
+          <figure>
+            <img src="task4_max_depth_1.png" style="width: 100%" />
+            <figcaption>m = 1</figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_max_depth_2.png" style="width: 100%" />
+            <figcaption>m = 2</figcaption>
+          </figure>
+          <figure>
+            <img src="task4_max_depth_3.png" style="width: 100%" />
+            <figcaption>m = 3</figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_max_depth_4.png" style="width: 100%" />
+            <figcaption>m = 4</figcaption>
+          </figure>
+          <figure>
+            <img src="task4_max_depth_5.png" style="width: 100%" />
+            <figcaption>m = 5</figcaption>
+          </figure>
+        </div>
+      </div>
+      <p>
+        Higher max_ray_depth values result in more complex indirect lighting
+        effects, such as color bleeding, reflections, and global illumination.
+        These effects enhance the realism and visual richness of the rendered
+        image compared to rasterization, where indirect lighting is challenging
+        to achieve accurately.
+      </p>
+
+      <h3>ScreenShots for Russian Roulette rendering for CBbunny.dae</h3>
+
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_russian_roulette_0.png" style="width: 100%" />
+            <figcaption>m = 0</figcaption>
+          </figure>
+          <figure>
+            <img src="task4_russian_roulette_1.png" style="width: 100%" />
+            <figcaption>m = 1</figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_russian_roulette_2.png" style="width: 100%" />
+            <figcaption>m = 2</figcaption>
+          </figure>
+          <figure>
+            <img src="task4_russian_roulette_3.png" style="width: 100%" />
+            <figcaption>m = 3</figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_russian_roulette_4.png" style="width: 100%" />
+            <figcaption>m = 4</figcaption>
+          </figure>
+          <figure>
+            <img src="task4_russian_roulette_100.png" style="width: 100%" />
+            <figcaption>m = 100</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <h3>Comparison of rendered views with various sample-per-pixel rates</h3>
+
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_spp_1.png" style="width: 100%" />
+            <figcaption>s = 1</figcaption>
+          </figure>
+          <figure>
+            <img src="task4_spp_2.png" style="width: 100%" />
+            <figcaption>s = 2</figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_spp_4.png" style="width: 100%" />
+            <figcaption>s = 4</figcaption>
+          </figure>
+          <figure>
+            <img src="task4_spp_8.png" style="width: 100%" />
+            <figcaption>s = 8</figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_spp_16.png" style="width: 100%" />
+            <figcaption>s = 16</figcaption>
+          </figure>
+          <figure>
+            <img src="task4_spp_64.png" style="width: 100%" />
+            <figcaption>s = 64</figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="task4_spp_1024.png" style="width: 100%" />
+            <figcaption>s = 1024</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="Part5">
+      <h2>Task 5: Adaptive Sampling</h2>
+      <h3>Explanation of the Adaptive Sampling</h3>
+
+      <p>
+        Adaptive sampling dynamically adjusts the number of samples taken during
+        rendering based on the variance in pixel color. In the provided code,
+        after processing a batch of samples, the algorithm computes the mean and
+        variance of radiance values and calculates a confidence interval width.
+        If the interval width is below a specified tolerance relative to the
+        mean, the sampling loop breaks early, optimizing computational resources
+        by allocating more samples to pixels with higher uncertainty and fewer
+        samples to those with lower uncertainty.
+      </p>
+      <h3>Implementation of the Adaptive Sampling</h3>
+      <p>
+        Additional to our implementation from part1, we added the variables
+        <span style="background-color: rgb(220, 220, 217)">s1</span> (sum of
+        xk)and
+        <span style="background-color: rgb(220, 220, 217)">variance</span> (sum
+        of xk{2}) Reuse the for loop that we had before, in each loop, we set xk
+        as the return value from
+        <span style="background-color: rgb(220, 220, 217)"
+          >est_radiance_global_illumination.illum()</span
+        >, update s1 and s2. We also added a if statement checking if the number
+        of samples that we have sampled is a multiple of
+        <span style="background-color: rgb(220, 220, 217)">samplesPerBatch</span
+        >, we check if 1.96 &middot; &radic;<span
+          style="text-decoration: overline"
+          >n</span
+        >
+        / &sigma; &lt; maxTolerance &middot; mean. If false, the sample has not
+        converged and we will keep looping; if yes, the sample has converged and
+        we will break the loop. Finally, we update
+        <span style="background-color: rgb(220, 220, 217)"
+          >sampleCountBuffer</span
+        >
+        at the corresponding index to be num_samples.
+      </p>
+
+      <h3>Result</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: row">
+          <img src="task5_blob_rate.png" style="width: 100%" />
+          <img src="task5_blob.png" style="width: 100%" />
+        </div>
+        <p>blob.dae -s 2048 -l 1 -m 5</p>
+        <div style="flex-direction: row">
+          <img src="task5_dragon_rate.png" style="width: 100%" />
+          <img src="task5_dragon.png" style="width: 100%" />
+        </div>
+        <p>CBdragon.dae -s 2048 -l 1 -m 5</p>
+      </div>
+    </section>
+  </body>
+</html>

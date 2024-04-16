@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Darren Wang | CS184 Homework Webpages</title>
+    <style>
+      body {
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans";
+        line-height: 1.6;
+        margin-left: 20%;
+        margin-right: 20%;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: #333;
+      }
+
+      section {
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        border-bottom: 2px solid #333;
+        padding-bottom: 5px;
+      }
+
+      h3 {
+        margin-bottom: 2px;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+      a:link {
+        color: purple;
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      a:visited {
+        color: purple;
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: #0abab5;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+
+      a:active {
+        color: #10098f;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+      *::first-letter {
+        text-transform: uppercase;
+      }
+      ul {
+        list-style-type: disc; /* Default is disc */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CS184/284A Homework Webpages</h1>
+    <h2>
+      Darren Wang (<a href="https://github.com/whydarren-6uom">GitHub</a>)
+    </h2>
+    <br /><br />
+    <a href="/hw1/index.html">Homework 1: Rasterizer</a>
+    <br /><br />
+    <a href="/hw2/index.html">Homework 2: Meshedit</a>
+    <br /><br />
+    <a href="/hw3/index.html">Homework 3: Pathtracer</a>
+    <br /><br />
+    <a href="/hw4/index.html">Homework 4: Cloth Sim</a>
+    <br /><br />
+    <a href="/final project/index.html">Final Project Proposal</a>
+    <br /><br />
+    <a href="/final project/milestone.html">Final Project Milestone</a>
+  </body>
+  <script>
+    var links = document.body.getElementsByTagName("a");
+    var a = window.location.href.indexOf(".io");
+    var repo_name = window.location.href.substring(a + 3);
+    for (var i = 0; i < links.length; i++) {
+      var link = links[i];
+      var actual_name = link.href.substring(link.href.indexOf(".io") + 4);
+      link.href = repo_name + actual_name;
+    }
+  </script>
+</html>
