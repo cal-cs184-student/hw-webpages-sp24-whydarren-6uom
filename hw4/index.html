@@ -1,7 +1,543 @@
 <html>
-	<head>
-	</head>
-	<body>
-		Homework 4 index.html here
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      id="MathJax-script"
+      async
+      src="https://polyfill.io/v3/|latest?features=es6"
+    ></script>
+    <title>Homework 4 Report</title>
+    <script
+      type="text/javascript"
+      async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"
+    ></script>
+    <style>
+      body {
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans";
+        line-height: 1.6;
+        margin-top: 5%;
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-bottom: 10%;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: #333;
+      }
+
+      section {
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        border-bottom: 2px solid #333;
+        padding-bottom: 5px;
+      }
+
+      h3 {
+        margin-bottom: 2px;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+      a:link {
+        color: purple;
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      a:visited {
+        color: purple;
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: #0abab5;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+
+      a:active {
+        color: #10098f;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+      *::first-letter {
+        text-transform: uppercase;
+      }
+      ul {
+        list-style-type: disc; /* Default is disc */
+      }
+      table {
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans";
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 15px;
+      }
+
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr td:nth-child(1) {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Report for Homework 4: Clothsim</h1>
+      <p>Date: Mar 26, 2024</p>
+      <p>
+        Group Member:
+        <a href="https://github.com/whydarren-6uom">Darren Wang</a>,
+        <a href="https://github.com/Sunnyweather1314">Jiayi Xu</a>
+      </p>
+    </header>
+
+    <section id="overview">
+      <h2>Homework Description</h2>
+      <p>
+        Clothsim explores various aspects of cloth simulation, divided into
+        several parts. Part 1 introduces masses and springs, showcasing
+        wireframe images with different constraints. Part 2 delves into
+        numerical integration simulations, demonstrating the impact of
+        parameters like spring constant, damping, and density on cloth behavior.
+        Part 3 focuses on collision handling with other objects, illustrating
+        the effect of varying spring constants. Part 4 addresses
+        self-collisions, displaying cloth falling scenarios with different
+        densities and spring constants. Part 5 explores shader programs,
+        including the Blinn-Phong shading model, texture mapping, bump mapping,
+        and mirror shader effects, showcasing their visual outcomes and
+        computational complexities. Overall, the implementation proecss went
+        quite smooth for our team.
+      </p>
+    </section>
+
+    <section id="Part1">
+      <h2>Part 1: Masses and springs</h2>
+      <h3>screenshots of scene/pinned2.json</h3>
+      <div style="display: flex; justify-content: center; align-items: center">
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+          "
+        >
+          <img src="Part I-angle-1.png" style="width: 100%" />
+          <img src="Part I-angle-2.png" style="width: 100%" />
+          <img src="Part I-angle-3.png" style="width: 100%" />
+          <img src="Part I-angle-4.png" style="width: 100%" />
+        </div>
+      </div>
+
+      <h3>screenshots of wireframe</h3>
+      <div style="display: flex; justify-content: center; align-items: center">
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+          "
+        >
+          <figure>
+            <img src="Part I-no-shearing.png" style="width: 100%" />
+            <figcaption>wireframe with no shearing</figcaption>
+          </figure>
+          <figure>
+            <img src="Part I-only-shearing.png" style="width: 100%" />
+            <figcaption>wireframe with only shearing</figcaption>
+          </figure>
+          <figure>
+            <img src="Part I-all.png" style="width: 100%" />
+            <figcaption>wireframe with all constraints</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="Part2">
+      <h2>Part 2: Simulation via numerical integration</h2>
+
+      <h3>screenshots of large images with normal shading</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="Part-II-low-ks-mid.png" style="width: 100%" />
+            <figcaption>low-ks-mid</figcaption>
+          </figure>
+          <figure>
+            <img src="Part-II-low-ks-done.png" style="width: 100%" />
+            <figcaption>low-ks-done</figcaption>
+          </figure>
+        </div>
+
+        <div style="flex-direction: column">
+          <figure>
+            <img src="Part-II-high-ks-mid.png" style="width: 100%" />
+            <figcaption>high-ks-mid</figcaption>
+          </figure>
+          <figure>
+            <img src="Part-II-high-ks-done.png" style="width: 100%" />
+            <figcaption>high-ks-done</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <p>
+        With a very low spring constant(ks), the cloth behaves sluggishly. It
+        stretches easily and doesn't snap back quickly. This results in a very
+        loose and wobbly cloth that doesn't hold its shape well. Conversely,
+        with a high spring constant, the cloth becomes stiff. It resists
+        deformation strongly, leading to less movement and more rigidity in the
+        cloth structure.
+      </p>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="Part-II-low-damp-mid-1.png" style="width: 100%" />
+            <figcaption>low-damp-mid-1</figcaption>
+          </figure>
+          <figure>
+            <img src="Part-II-low-damp-mid-2.png" style="width: 100%" />
+            <figcaption>low-damp-mid-2</figcaption>
+          </figure>
+          <figure>
+            <img src="Part-II-low-damp-done.png" style="width: 100%" />
+            <figcaption>low-damp-done</figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="Part-II-high-damp-mid.png" style="width: 100%" />
+            <figcaption>high-damp-mid</figcaption>
+          </figure>
+          <figure>
+            <img src="Part-II-high-damp-done.png" style="width: 100%" />
+            <figcaption>high-damp-done</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <p>
+        With low damping, the cloth oscillates more freely and takes longer to
+        come to rest after being disturbed. It may exhibit exaggerated movements
+        and fluttering. High damping damps out oscillations more quickly,
+        resulting in a smoother and more controlled movement of the cloth. It
+        settles down faster after being disturbed.
+      </p>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="Part-II-low-dense-mid.png" style="width: 100%" />
+            <figcaption>low-dense-mid</figcaption>
+          </figure>
+          <figure>
+            <img src="Part-II-low-dense-done.png" style="width: 100%" />
+            <figcaption>low-dense-done</figcaption>
+          </figure>
+        </div>
+        <div style="flex-direction: column">
+          <figure>
+            <img src="Part-II-high-dense-mid.png" style="width: 100%" />
+            <figcaption>high-dense-mid</figcaption>
+          </figure>
+          <figure>
+            <img src="Part-II-high-dense-done.png" style="width: 100%" />
+            <figcaption>high-dense-done</figcaption>
+          </figure>
+        </div>
+      </div>
+      <p>
+        A low density cloth feels lighter and thus looks smoother and has less
+        wrinkles at the point of gravity. On the other hand, a high-density
+        cloth feels heavier and is less affected by external forces. It has
+        larger gravity which creates more folds in the middle.
+      </p>
+      <h3>screenshot of shaded cloth from scene/pinned4.json</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <img src="Part-II-pinned-4.png" style="width: 100%" />
+        </div>
+      </div>
+    </section>
+
+    <section id="Part3">
+      <h2>Part 3: Handling collisions with other objects</h2>
+      <h3>Comparison between different ks</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="Part III-ks500.png" style="width: 100%" />
+            <figcaption>ks = 500</figcaption>
+          </figure>
+          <figure>
+            <img src="Part III-ks5000.png" style="width: 100%" />
+            <figcaption>ks = 5000</figcaption>
+          </figure>
+          <figure>
+            <img src="Part III-ks50000.png" style="width: 100%" />
+            <figcaption>ks = 50000</figcaption>
+          </figure>
+        </div>
+      </div>
+      <p>
+        We can see that varying the spring constant in the cloth simulation will
+        directly impact its stiffness and how tightly it conforms to the
+        underlying surface. Lower values will yield a softer, more fluid-like
+        behavior, while higher values will produce a stiffer, more rigid
+        appearance.
+      </p>
+      <h3>Cloth resting on plane</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="Part III-plane.png" style="width: 100%" />
+            <!-- <figcaption>CBbunny.dae l = 1, s = 1</figcaption> -->
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="Part4">
+      <h2>Part 4: Handling self-collisions</h2>
+
+      <h3>Screenshots cloth falling</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <img src="Part IV-falling-1.png" style="width: 100%" />
+          <img src="Part IV-falling-2.png" style="width: 100%" />
+        </div>
+        <div style="flex-direction: column">
+          <img src="Part IV-falling-3.png" style="width: 100%" />
+          <img src="Part IV-falling-4.png" style="width: 100%" />
+        </div>
+      </div>
+      <p>dense = 15, ks = 5000</p>
+
+      <h3>Comparison between different ks and density</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <img src="Part IV-falling-density40-1.png" style="width: 100%" />
+          <img src="Part IV-falling-density40-2.png" style="width: 100%" />
+        </div>
+        <div style="flex-direction: column">
+          <img src="Part IV-falling-density40-3.png" style="width: 100%" />
+          <img src="Part IV-falling-density40-4.png" style="width: 100%" />
+        </div>
+      </div>
+      <p>dense = 40, ks = 5000</p>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <img src="Part IV-falling-density5-1.png" style="width: 100%" />
+          <img src="Part IV-falling-density5-2.png" style="width: 100%" />
+        </div>
+        <div style="flex-direction: column">
+          <img src="Part IV-falling-density5-3.png" style="width: 100%" />
+          <img src="Part IV-falling-density5-4.png" style="width: 100%" />
+        </div>
+      </div>
+      <p>dense = 5, ks = 5000</p>
+      <p>
+        As the density grows, the gravity of the cloth gets larger and thus if
+        falls and go to a rest state faster. When reaching a final state, the
+        cloth with higher density will be piled together into several layers,
+        while the cloth with lower density will have less layers on the ground
+        and eventually become flat.
+      </p>
+
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <img src="Part IV-falling-ks50000-1.png" style="width: 100%" />
+          <img src="Part IV-falling-ks50000-2.png" style="width: 100%" />
+        </div>
+        <div style="flex-direction: column">
+          <img src="Part IV-falling-ks50000-3.png" style="width: 100%" />
+          <img src="Part IV-falling-ks50000-4.png" style="width: 100%" />
+        </div>
+      </div>
+      <p>dense = 15, ks = 500</p>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <img src="Part IV-falling-ks500-1.png" style="width: 100%" />
+          <img src="Part IV-falling-ks500-2.png" style="width: 100%" />
+        </div>
+        <div style="flex-direction: column">
+          <img src="Part IV-falling-ks500-3.png" style="width: 100%" />
+          <img src="Part IV-falling-ks500-4.png" style="width: 100%" />
+        </div>
+      </div>
+      <p>dense = 15, ks = 500</p>
+      <p>
+        With a high ks, the cloth behaves stiffly and resists deformation. As
+        the cloth falls onto the plane, it maintains its shape relatively well.
+        The impact with the plane is absorbed quickly, causing the cloth to
+        bounce off with little deformation. While with lower ks, the cloth
+        behaves more flexibly and deforms easily. As it falls onto the plane,
+        the cloth stretches and wrinkles significantly due to the impact force.
+        It may even fold or bunch up upon contact with the surface. The low
+        stiffness allows the cloth to absorb more energy from the impact,
+        resulting in a slower settling process. When reaches a final state, the
+        cloth has more wrinkles and folds.
+      </p>
+    </section>
+
+    <section id="Part5">
+      <h2>Part 5: Cloth Sim</h2>
+      <h3>Shader Program Definition and Usage Explaation</h3>
+
+      <p>
+        A shader program is a set of instructions written in a shading language
+        that runs on the GPU to compute rendering effects. Shaders are used to
+        manipulate the appearance of 3D objects in computer graphics
+        applications. They are typically categorized into two main types: vertex
+        shaders and fragment shaders.
+      </p>
+      <p>
+        Vertex shaders primarily handle vertex-level operations, transforming 3D
+        vertex positions from object space to screen space, and computing
+        lighting and material properties at each vertex. They also pass data to
+        fragment shaders which determine the color of each pixel on the screen
+        by interpolating values computed by vertex shaders across triangles, and
+        applying lighting equations, texture mapping, and material properties to
+        produce the final rendered image.
+      </p>
+
+      <h3>Blinn-Phong shading model</h3>
+      <p>
+        The Blinn-Phong shading model calculates the color of each pixel based
+        on its interaction with light sources. It considers ambient, diffuse,
+        and specular lighting components. The ambient component represents the
+        overall light in the scene. Diffuse lighting depends on the angle
+        between the surface normal and light direction. Specular lighting is
+        based on the reflection of light towards the viewer, with the intensity
+        influenced by the surface roughness. The model simulates realistic
+        material effects.
+      </p>
+
+      <h3>Screenshots for Blinn-Phong</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="Part V-phong-all.png" style="width: 100%" />
+            <figcaption>all</figcaption>
+          </figure>
+          <figure>
+            <img src="Part V-phong-ambient.png" style="width: 100%" />
+            <figcaption>only ambient</figcaption>
+          </figure>
+          <figure>
+            <img src="Part V-phong-diffuse.png" style="width: 100%" />
+            <figcaption>only diffuse</figcaption>
+          </figure>
+          <figure>
+            <img src="Part V-phong-specular.png" style="width: 100%" />
+            <figcaption>only specular</figcaption>
+          </figure>
+        </div>
+      </div>
+      <h3>Texture Mapping Shader Custom Sample</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <img src="Part V-texture_mapping.png" style="width: 100%" />
+      </div>
+      <h3>Bump Mapping Shader with texture_3</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="Part V-bump_ball.png" style="width: 100%" />
+            <figcaption>bump sphere</figcaption>
+          </figure>
+          <figure>
+            <img src="Part V-bump_cloth.png" style="width: 100%" />
+            <figcaption>bump cloth</figcaption>
+          </figure>
+          <figure>
+            <img src="Part V-displacement_ball.png" style="width: 100%" />
+            <figcaption>displacement sphere</figcaption>
+          </figure>
+          <figure>
+            <img src="Part V-displacement_cloth.png" style="width: 100%" />
+            <figcaption>displacement cloth</figcaption>
+          </figure>
+        </div>
+      </div>
+      <p>
+        Bump mapping would produce a cloth and sphere with the illusion of bumps
+        and wrinkles, while displacement mapping would physically deform the
+        geometry of the sphere to represent the bumps and wrinkles. Displacement
+        mapping yields more realistic results at the cost of increased
+        computational complexity.
+      </p>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="Part V-bump_sphere_16.png" style="width: 100%" />
+            <figcaption>bump_sphere_16</figcaption>
+          </figure>
+          <figure>
+            <img src="Part V-bump_sphere_128.png" style="width: 100%" />
+            <figcaption>bump_sphere_128</figcaption>
+          </figure>
+          <figure>
+            <img src="Part V-displacement_sphere_16.png" style="width: 100%" />
+            <figcaption>displacement_sphere_16</figcaption>
+          </figure>
+          <figure>
+            <img src="Part V-displacement_sphere_128.png" style="width: 100%" />
+            <figcaption>displacement_sphere_128</figcaption>
+          </figure>
+        </div>
+      </div>
+      <p>
+        Bump mapping outperforms displacement mapping at this low sampling rate.
+        The blockiness of the sphere in the 16x16 displacement mapping image
+        illustrates this issue. This blockiness occurs because the fragment
+        shader interpolates height perturbations over the sphere from too few
+        samples, leading to inadequate representation of high frequency details
+        present in the texture. Conversely, with 128x128 samples, displacement
+        mapping matches the texture's high frequency content better, accurately
+        portraying both texture shading and physical deformations on the sphere.
+      </p>
+      <h3>Mirror Shader</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <div style="flex-direction: column">
+          <figure>
+            <img src="Part V-mirror_sphere.png" style="width: 100%" />
+            <figcaption>mirror_sphere</figcaption>
+          </figure>
+          <figure>
+            <img src="Part V-mirror_cloth.png" style="width: 100%" />
+            <figcaption>mirror_cloth</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>
