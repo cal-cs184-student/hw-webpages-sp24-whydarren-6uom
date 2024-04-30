@@ -1,0 +1,314 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      id="MathJax-script"
+      async
+      src="https://polyfill.io/v3/|latest?features=es6"
+    ></script>
+    <title>Team 37 Final Deliverable</title>
+    <script
+      type="text/javascript"
+      async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"
+    ></script>
+    <style>
+      body {
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans";
+        line-height: 1.6;
+        margin-top: 5%;
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-bottom: 10%;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: #333;
+      }
+
+      section {
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        border-bottom: 2px solid #333;
+        padding-bottom: 5px;
+      }
+
+      h3 {
+        margin-bottom: 2px;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+      a:link {
+        color: purple;
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      a:visited {
+        color: purple;
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: #0abab5;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+
+      a:active {
+        color: #10098f;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+      *::first-letter {
+        text-transform: uppercase;
+      }
+      ul {
+        list-style-type: disc; /* Default is disc */
+      }
+      table {
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans";
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 15px;
+      }
+
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr td:nth-child(1) {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Team 37 InfiniFurniture: Final Project Deliverable</h1>
+      <p>Date: Apr 29, 2024</p>
+      <p>
+        Group Member:
+        <a href="https://github.com/whydarren-6uom">Darren Wang</a>,
+        <a href="https://github.com/Sunnyweather1314">Jiayi Xu</a>,
+        <a href="https://github.com/eugene-yoojin-han">Eugene Han</a>,
+        <a href="https://github.com/MillerHollinger">Miller Hollinger</a>
+      </p>
+    </header>
+
+    <section id="Abstract">
+      <h2>Abstract</h2>
+      <p>
+        This project aimed to develop a Blender add-on that procedurally
+        generates furniture of four different kinds: dressers, tables, chairs,
+        and beds, with unique geometry and texture for each generated object.
+        The add-on was successfully implemented, allowing users to create a wide
+        variety of unique furniture quickly and easily, speeding up the modeling
+        process for projects with tight deadlines.
+      </p>
+    </section>
+
+    <section id="TechnicalApproach">
+      <h2>Technical Approach</h2>
+      <p>
+        Our technical approach involved using the Blender API to create an
+        add-on that procedurally generates furniture. We implemented algorithms
+        for generating the geometry and texture of each furniture type, based on
+        techniques from
+        <a
+          href="https://www.youtube.com/watch?v=B0J27sf9N1Y&list=PLjEaoINr3zgEPv5y--4MKpciLaoQYZB1Z"
+          >Blender Guru's YouTube tutorials</a
+        >
+        and
+        <a href="https://www.youtube.com/watch?v=TFQMNcTj5Jw"
+          >CG Python's Blender Scripting Guide: Mastering Mesh Editing with
+          Python</a
+        >. Our approach differed from the references in that we saved the
+        current bed model first since it was too hard to be scripted, and
+        randomly changed the style (texture, size) of the bed by using the saved
+        original bed and then using a script to change that. Also, for the
+        texture generation code, we used real wood and fabric pictures for the
+        wood and fabric textures since they were too hard to be adjusted only by
+        the settings in Blender.
+      </p>
+      <p>
+        One of the main challenges we encountered was the complexity of
+        scripting the bed generation. We tackled this by saving the current bed
+        model and then using a script to randomly change its style, texture, and
+        size. Another issue was generating realistic wood and fabric textures,
+        which we solved by using real pictures of wood and fabric in the texture
+        generation code.
+      </p>
+      <p>
+        Through this project, we learned how to use the Blender API to create an
+        add-on, implement procedural generation algorithms for geometry and
+        textures, and integrate our scripts into a cohesive package. We also
+        gained experience in project management, dividing tasks among team
+        members based on their strengths and coordinating our efforts to meet
+        deadlines.
+      </p>
+    </section>
+
+    <section id="Results">
+      <h2>Results</h2>
+      <h3>Bed Demo</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <video width="960" height="540" controls>
+          <source src="Bed Demo.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <h3>Chair Demo</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <video width="960" height="540" controls>
+          <source src="Chair Demo.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <h3>Table Demo</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <video width="960" height="540" controls>
+          <source src="Table Demo.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <h3>Dresser Demo</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <img
+          src="Dresser Demo 0.png"
+          alt="Dresser Demo 0"
+          width="480"
+          height="270"
+        />
+        <img
+          src="Dresser Demo 1.png"
+          alt="Dresser Demo 1"
+          width="480"
+          height="270"
+        />
+      </div>
+    </section>
+
+    <section id="References">
+      <h2>References</h2>
+      <ul>
+        <li>
+          <a
+            href="https://www.youtube.com/watch?v=B0J27sf9N1Y&list=PLjEaoINr3zgEPv5y--4MKpciLaoQYZB1Z"
+            >Blender Guru's YouTube tutorials</a
+          >
+        </li>
+        <li>
+          <a href="https://www.youtube.com/watch?v=TFQMNcTj5Jw"
+            >CG Python's Blender Scripting Guide: Mastering Mesh Editing with
+            Python</a
+          >
+        </li>
+      </ul>
+    </section>
+
+    <section id="Contributions">
+      <h2>Individual Contributions</h2>
+      <ul>
+        <li>
+          Darren Wang: Developed the metal texture generation code and the
+          fabric texture for chair cushions. Implemented chair-related mesh
+          generation scripts and created websites for the milestone and final
+          deliverables.
+        </li>
+        <li>
+          Jiayi Xu: Created the fabric texture generation code and implemented
+          the complex bed-related scripts. Assisted in the development of the
+          project website.
+        </li>
+        <li>
+          Eugene Han: Implemented the plastic texture generation code and
+          developed table-related mesh generation scripts. Prepared slides for
+          the milestone and final deliverable presentations.
+        </li>
+        <li>
+          Miller Hollinger: Developed the wood texture generation code and
+          implemented the intricate dresser-related mesh generation scripts.
+          Integrated all scripts and packaged them into a cohesive Blender
+          add-on. Produced videos for the milestone and final deliverable
+          presentations.
+        </li>
+      </ul>
+    </section>
+
+    <section id="Schedule">
+      <h2>Schedule</h2>
+      <h3>Week 1: April 2 - 9</h3>
+      <ul>
+        <li>[✅] Everyone downloads Blender.</li>
+        <li>[✅] Everyone familiarizes themselves with Blender.</li>
+        <li>
+          [✅] Everyone researches the Blender API to understand how to write
+          code for Blender.
+        </li>
+        <li>[✅] We set up a GitHub for the project.</li>
+      </ul>
+      <h3>Week 2: April 9 - 16</h3>
+      <ul>
+        <li>[✅] Meet to discuss the structure of our code.</li>
+        <li>[✅] Write texture generation code.</li>
+        <li>[✅] Wood (Miller)</li>
+        <li>[✅] Plastic (Eugene)</li>
+        <li>[✅] Metal (Darren)</li>
+        <li>[✅] Cloth (Jiayi)</li>
+      </ul>
+      <h3>Week 3: April 16 - 23</h3>
+      <ul>
+        <li>[✅]Finalize texture generation code.</li>
+        <li>[✅]Start furniture generation code (if you have time).</li>
+        <li>[✅]Dresser (Miller)</li>
+        <li>[✅]Table (Eugene)</li>
+        <li>[✅]Chair (Darren)</li>
+        <li>[✅]Bed (Jiayi)</li>
+      </ul>
+      <h3>--Following Stays Unchanged--</h3>
+      <h3>Week 4: April 23 - 30</h3>
+      <ul>
+        <li>Write + finish up our furniture generation code.</li>
+      </ul>
+
+      <h3>Week 5: April 30 - May 1</h3>
+      <ul>
+        <li>Prepare the final presentation!</li>
+        <li>
+          Any last-minute work to put the addon together + make it available
+          online.
+        </li>
+        <li>Any last-minute work in general.</li>
+      </ul>
+    </section>
+  </body>
+</html>
