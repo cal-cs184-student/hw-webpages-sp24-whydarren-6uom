@@ -153,24 +153,23 @@
         <a href="https://www.youtube.com/watch?v=TFQMNcTj5Jw"
           >CG Python's Blender Scripting Guide: Mastering Mesh Editing with
           Python</a
-        >. Our approach differed from the references in that we saved the
-        current bed model first since it was too hard to be scripted, and
-        randomly changed the style (texture, size) of the bed by using the saved
-        original bed and then using a script to change that. Also, for the
-        texture generation code, we used real wood and fabric pictures for the
-        wood and fabric textures since they were too hard to be adjusted only by
-        the settings in Blender.
+        >. Our approaches differed from the references in a few ways — for
+        example, instead of modeling the bed entirely computationally, we
+        instead modeled it by hand and randomly changed the style (texture,
+        size) of the bed. Also, for the texture generation code, we used real
+        wood and fabric pictures for the wood and fabric textures since the
+        settings in Blender alone were insufficient to create the level of
+        detail we wanted.
       </p>
       <p>
         Over the past weeks, our team implemented a set of Python scripts for
         generating randomized 3D models of furniture items in Blender. The
         furniture types covered include beds, chairs, dressers, and tables. Each
-        script focuses on a specific type of furniture and utilizes Blender's
-        API and bmesh library to procedurally generate the 3D models with
-        varying dimensions, materials, and features. The goal is to create a
-        diverse set of realistic furniture models that can be used in various
-        applications such as interior design visualization, game development, or
-        virtual environments.
+        script utilizes Blender's bpy and bmesh libraries to procedurally
+        generate the 3D models with varying dimensions, materials, and features.
+        The goal is to create a diverse set of realistic furniture models that
+        can be used in various applications such as interior design
+        visualization, game development, or virtual environments.
       </p>
       <p>
         The bed generation script starts by defining functions to create
@@ -186,26 +185,26 @@
         beveling to enhance the visual appearance of the bed.
       </p>
       <p>
-        The chair generation script follows a similar approach, with functions
-        to create metal, fabric, plastic, and wood materials. The main chair
-        creation function generates the seat, backrest, legs, and optional
-        cushion of the chair. The seat shape is randomly selected between a cube
-        and a cylinder, and the dimensions of each component are randomized. The
-        script also applies beveling and subdivision to smooth out the edges and
-        surfaces of the chair. The chosen material is assigned to the chair
-        components to give them a realistic appearance.
+        The chair generation script follows a similar approach, utilizing the
+        same functions to create materials. The main chair creation function
+        generates the seat, backrest, legs, and an optional cushion of the
+        chair. The seat shape is then randomly selected between a cube and a
+        cylinder, and the dimensions of each component are randomized. Like with
+        the bed, the chair script also applies beveling and subdivision to
+        smooth out edges and surfaces. Finally, the chosen materials are
+        assigned to the chair components to give it a realistic appearance.
       </p>
       <p>
-        The dresser generation script focuses on creating a dresser with
-        multiple drawers and optional legs. It utilizes the bmesh library to
-        create the basic geometry of the dresser body, drawers, and knobs. The
-        script randomizes the number of rows and columns of drawers, as well as
-        their dimensions and spacing. It also determines the presence and
-        dimensions of the legs and an optional base. The drawers and knobs are
-        positioned correctly based on the dresser's dimensions. The script
-        assigns random materials (wood, plastic, or metal) to the dresser body,
-        drawers, and knobs to add variety. Finally, it recalculates the UV
-        coordinates of the dresser components to ensure proper texture mapping.
+        The dresser generation script creates a dresser with a varying number of
+        drawers, legs, and a flat base. It utilizes the bmesh library to create
+        the basic geometry of the dresser body, drawers, and knobs out of
+        primitive components. The script then randomizes the number of rows and
+        columns of drawers, as well as their dimensions and spacing, and then
+        positions the elements correctly. It also randomly decides if legs or a
+        base will be included. After the geometry is defined, the script assigns
+        random materials (wood, plastic, or metal) to the dresser body, drawers,
+        and knobs to add variety. Finally, it recalculates the UV coordinates of
+        the dresser components to ensure proper texture mapping.
       </p>
       <p>
         The table generation script generates a randomized table with a top and
@@ -213,20 +212,20 @@
         to avoid duplicates. The script then randomizes the dimensions of the
         table top and legs. The table top shape is randomly selected between a
         cube and a cylinder, and the corresponding geometry is created using
-        Blender's primitive operations. The script applies beveling and
-        subdivision to the table top to achieve smoother edges. The table legs
-        are created as cylinders and positioned based on the table top shape and
-        dimensions. Finally, a random plastic material with a randomized color
-        is assigned to the table and legs.
+        Blender's primitive operations. Like with the other furniture, the
+        script applies beveling and subdivision to the table top to achieve
+        smoother edges. The table legs are created as cylinders and positioned
+        based on the table top shape and dimensions. Finally, a random plastic
+        material with a randomized color is assigned to the table and legs.
       </p>
       <p>
         Throughout the furniture generation process, the scripts utilize various
         techniques to add realism and variation to the models. These include
         randomizing dimensions within predefined ranges, selecting random
         materials and textures, applying modifiers like beveling and
-        subdivision, and positioning components relative to each other. The use
-        of Blender's API and bmesh library allows for efficient and procedural
-        generation of the furniture models.
+        subdivision, and positioning components relative to each other.
+        Blender's bpy and bmesh libraries were instrumental in making this
+        possible.
       </p>
       <p>
         In conclusion, the implemented furniture generation scripts demonstrate
