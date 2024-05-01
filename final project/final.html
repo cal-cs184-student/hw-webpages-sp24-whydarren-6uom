@@ -8,6 +8,7 @@
       src="https://polyfill.io/v3/|latest?features=es6"
     ></script>
     <title>Team 37 Final Deliverable</title>
+    <link rel="icon" type="image/x-icon" href="logo2.png" />
     <script
       type="text/javascript"
       async
@@ -121,6 +122,10 @@
       </p>
     </header>
 
+    <div style="display: flex; justify-content: center; margin-top: 15px">
+      <img src="logo2.png" alt="Logo" />
+    </div>
+
     <section id="Abstract">
       <h2>Abstract</h2>
       <p>
@@ -157,6 +162,83 @@
         the settings in Blender.
       </p>
       <p>
+        Over the past weeks, our team implemented a set of Python scripts for
+        generating randomized 3D models of furniture items in Blender. The
+        furniture types covered include beds, chairs, dressers, and tables. Each
+        script focuses on a specific type of furniture and utilizes Blender's
+        API and bmesh library to procedurally generate the 3D models with
+        varying dimensions, materials, and features. The goal is to create a
+        diverse set of realistic furniture models that can be used in various
+        applications such as interior design visualization, game development, or
+        virtual environments.
+      </p>
+      <p>
+        The bed generation script starts by defining functions to create
+        different material types, including metal, fabric, plastic, and wood.
+        These functions utilize Blender's node-based material system to set up
+        shaders and textures that mimic the appearance of the respective
+        materials. The main bed creation function then generates the individual
+        components of the bed, such as the frame, mattress, pillows, and quilt.
+        The dimensions and materials of these components are randomized within
+        predefined ranges to create variation. The script also handles the
+        positioning and scaling of the components relative to each other to
+        ensure a cohesive bed structure. Additionally, it applies modifiers like
+        beveling to enhance the visual appearance of the bed.
+      </p>
+      <p>
+        The chair generation script follows a similar approach, with functions
+        to create metal, fabric, plastic, and wood materials. The main chair
+        creation function generates the seat, backrest, legs, and optional
+        cushion of the chair. The seat shape is randomly selected between a cube
+        and a cylinder, and the dimensions of each component are randomized. The
+        script also applies beveling and subdivision to smooth out the edges and
+        surfaces of the chair. The chosen material is assigned to the chair
+        components to give them a realistic appearance.
+      </p>
+      <p>
+        The dresser generation script focuses on creating a dresser with
+        multiple drawers and optional legs. It utilizes the bmesh library to
+        create the basic geometry of the dresser body, drawers, and knobs. The
+        script randomizes the number of rows and columns of drawers, as well as
+        their dimensions and spacing. It also determines the presence and
+        dimensions of the legs and an optional base. The drawers and knobs are
+        positioned correctly based on the dresser's dimensions. The script
+        assigns random materials (wood, plastic, or metal) to the dresser body,
+        drawers, and knobs to add variety. Finally, it recalculates the UV
+        coordinates of the dresser components to ensure proper texture mapping.
+      </p>
+      <p>
+        The table generation script generates a randomized table with a top and
+        four legs. It starts by deleting any existing table objects in the scene
+        to avoid duplicates. The script then randomizes the dimensions of the
+        table top and legs. The table top shape is randomly selected between a
+        cube and a cylinder, and the corresponding geometry is created using
+        Blender's primitive operations. The script applies beveling and
+        subdivision to the table top to achieve smoother edges. The table legs
+        are created as cylinders and positioned based on the table top shape and
+        dimensions. Finally, a random plastic material with a randomized color
+        is assigned to the table and legs.
+      </p>
+      <p>
+        Throughout the furniture generation process, the scripts utilize various
+        techniques to add realism and variation to the models. These include
+        randomizing dimensions within predefined ranges, selecting random
+        materials and textures, applying modifiers like beveling and
+        subdivision, and positioning components relative to each other. The use
+        of Blender's API and bmesh library allows for efficient and procedural
+        generation of the furniture models.
+      </p>
+      <p>
+        In conclusion, the implemented furniture generation scripts demonstrate
+        the power of procedural modeling techniques in creating diverse and
+        realistic 3D models. By leveraging Blender's capabilities and
+        randomizing various aspects of the furniture, our team has developed a
+        flexible and efficient workflow for generating a wide range of furniture
+        items. These generated models can be used in various applications,
+        saving time and effort in manual modeling while maintaining a high level
+        of visual quality and variation.
+      </p>
+      <p>
         One of the main challenges we encountered was the complexity of
         scripting the bed generation. We tackled this by saving the current bed
         model and then using a script to randomly change its style, texture, and
@@ -176,6 +258,14 @@
 
     <section id="Results">
       <h2>Results</h2>
+
+      <h3>Video</h3>
+      <div style="display: flex; justify-content: center; margin-top: 15px">
+        <video width="960" height="540" controls>
+          <source src="184-video.mp4" type="video/mp4" />
+        </video>
+      </div>
+
       <h3>All Together</h3>
       <div style="display: flex; justify-content: center; margin-top: 15px">
         <img src="All.png" alt="All Together" width="960" height="360" />
